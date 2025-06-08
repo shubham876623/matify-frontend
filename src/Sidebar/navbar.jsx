@@ -48,9 +48,14 @@ const Navbar = () => {
 
   return (
     <header className="w-full bg-white shadow border-b border-gray-200 px-6 py-4 flex justify-between items-center">
-      <Link to="/" className="text-2xl font-bold text-black">
-        Matify Studio
-      </Link>
+     <Link to="/">
+  <img
+    src="logo.jpg"  // Or your actual logo path
+    alt="Matify Logo"
+    className="h-10 w-auto"  // Adjust height/width as needed
+  />
+</Link>
+
 
       <div className="flex items-center gap-4 relative">
         {isLoggedIn && (
