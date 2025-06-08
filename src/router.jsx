@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from './components/Layout';
 import ProtectedRoute from './ProtectedRoute';
-import Signup from './pages/Signup';
+import Signup from './pages/signup';
 import Login from './pages/Login';
 import MyAIModels from './Generate/Mymodels';
 import TrainAI from './Generate/TrainAI';
