@@ -32,7 +32,6 @@ const TrainAI = () => {
     try {
       // Step 1: Check Credits
       const creditResponse = await api.get('/api/credits/');
-      
       const availableCredits = creditResponse.data.credits_remaining;
 
       if (availableCredits < 5) {
@@ -41,29 +40,20 @@ const TrainAI = () => {
         return;
       }
 
-      // Step 2: Proceed to Train
+      // Step 2: Prepare FormData and send training request
       const formData = new FormData();
       formData.append('zip_file', zipFile);
       formData.append('trigger_word', triggerWord);
 
-      const token = localStorage.getItem('access_token');
-      const trainRes = await api.post('/api/train/', formData,{
-       
-        headers: {
-          'Content-Type': 'application/json',
-        },
-     
-      });
+      const trainRes = await api.post('/api/train/', formData); // No need to manually set Content-Type
 
-      const trainResult = await trainRes.json();
-
-      if (trainRes.ok) {
-        // Step 3: Deduct credits only after successful training
+      if (trainRes.status === 200 || trainRes.status === 201) {
         await api.post('/api/dedctcredit/', { amount: 5 });
-        toast.success(`Training started: ${trainResult.status}`);
+        toast.success(`Training started: ${trainRes.data.status || 'success'}`);
       } else {
-        toast.error(`Error: ${trainResult.error || 'Training request failed.'}`);
+        toast.error(`Error: ${trainRes.data.error || 'Training request failed.'}`);
       }
+
     } catch (err) {
       console.error(err);
       toast.error('An error occurred while processing the request.');
